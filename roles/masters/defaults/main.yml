@@ -1,5 +1,6 @@
 ---
 
+deployment_type: origin
 masters_deployment_type: "{{ deployment_type | default('openshift') }}"
 
 masters_openshift_master_cluster_method: "{{ openshift_master_cluster_method | default('pacemaker') }}"

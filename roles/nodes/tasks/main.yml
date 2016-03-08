@@ -10,7 +10,7 @@
   tags:
     - logstash
     - log-client
-  when: "'monitoring' in groups and not ansible_local.system.is_atomic | bool"
+  when: "'monitoring' in groups"
 
 - include: logstash_config.yml
   tags:

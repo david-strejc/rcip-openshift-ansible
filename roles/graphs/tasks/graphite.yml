@@ -2,6 +2,7 @@
 - name: Install Graphite Dependencies for Redhat
   yum: "name={{ item }} state=present"
   with_items:
+    - git
     - gcc
     - mod_wsgi
     - python-pip
@@ -9,7 +10,7 @@
     - python-cffi
     - libffi
     - libffi-devel
-    - pycairo
+    #- pycairo
 
 - name: get requirement.txt for graphite-web
   environment: proxy_env
@@ -94,6 +95,7 @@
     - semanage fcontext -a -t httpd_log_t "/opt/graphite/storage/log/webapp(/.*)?"
     - restorecon -R -v /opt/graphite/storage/log/webapp
   when: context_present|failed
+  ignore_errors: yes
 
 - name: configure graphite-web
   template:

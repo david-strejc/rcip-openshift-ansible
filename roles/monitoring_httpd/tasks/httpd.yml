@@ -10,20 +10,20 @@
 - name: install mod_wsgi
   yum: name=mod_wsgi state=installed
 
-- name: httpd security rules (iptables / selinux)
-  lineinfile:
-    dest: /etc/sysconfig/iptables
-    regexp: "{{ item.regexp }}"
-    line: "{{ item.line }}"
-    insertbefore: "^-A INPUT -j REJECT"
-  with_items:
-    - { regexp: "^-A INPUT -p tcp --dport {{ sensu_httpd_port }} -s 0.0.0.0/0 -j ACCEPT$", line: "-A INPUT -p tcp --dport {{ sensu_httpd_port }} -s 0.0.0.0/0 -j ACCEPT" }
-    - { regexp: "^-A INPUT -p tcp --dport {{ grafana_httpd_port }} -s 0.0.0.0/0 -j ACCEPT$", line: "-A INPUT -p tcp --dport {{ grafana_httpd_port }} -s 0.0.0.0/0 -j ACCEPT" }
-    - { regexp: "^-A INPUT -p tcp --dport {{ kibana_httpd_port }} -s 0.0.0.0/0 -j ACCEPT$", line: "-A INPUT -p tcp --dport {{ kibana_httpd_port }} -s 0.0.0.0/0 -j ACCEPT" }
-    - { regexp: "^-A INPUT -p tcp --dport {{ rabbitmq_port }} -s 0.0.0.0/0 -j ACCEPT$", line: "-A INPUT -p tcp --dport {{ rabbitmq_port }} -s 0.0.0.0/0 -j ACCEPT" }
-    - { regexp: "^-A INPUT -p tcp --dport {{ carbon_port }} -s 0.0.0.0/0 -j ACCEPT$", line: "-A INPUT -p tcp --dport {{ carbon_port }} -s 0.0.0.0/0 -j ACCEPT" }
-  notify:
-        - httpd security rules
+#- name: httpd security rules (iptables / selinux)
+#  lineinfile:
+#    dest: /etc/sysconfig/iptables
+#    regexp: "{{ item.regexp }}"
+#    line: "{{ item.line }}"
+#    insertbefore: "^-A INPUT -j REJECT"
+#  with_items:
+#    - { regexp: "^-A INPUT -p tcp --dport {{ sensu_httpd_port }} -s 0.0.0.0/0 -j ACCEPT$", line: "-A INPUT -p tcp --dport {{ sensu_httpd_port }} -s 0.0.0.0/0 -j ACCEPT" }
+#    - { regexp: "^-A INPUT -p tcp --dport {{ grafana_httpd_port }} -s 0.0.0.0/0 -j ACCEPT$", line: "-A INPUT -p tcp --dport {{ grafana_httpd_port }} -s 0.0.0.0/0 -j ACCEPT" }
+#    - { regexp: "^-A INPUT -p tcp --dport {{ kibana_httpd_port }} -s 0.0.0.0/0 -j ACCEPT$", line: "-A INPUT -p tcp --dport {{ kibana_httpd_port }} -s 0.0.0.0/0 -j ACCEPT" }
+#    - { regexp: "^-A INPUT -p tcp --dport {{ rabbitmq_port }} -s 0.0.0.0/0 -j ACCEPT$", line: "-A INPUT -p tcp --dport {{ rabbitmq_port }} -s 0.0.0.0/0 -j ACCEPT" }
+#    - { regexp: "^-A INPUT -p tcp --dport {{ carbon_port }} -s 0.0.0.0/0 -j ACCEPT$", line: "-A INPUT -p tcp --dport {{ carbon_port }} -s 0.0.0.0/0 -j ACCEPT" }
+#  notify:
+#        - httpd security rules
 
 - meta: flush_handlers
 

@@ -9,37 +9,42 @@ dns
 monitoring
 
 [masters]
-master.openshift.com
+test01.es3.cz 
 
 [nodes]
-master.openshift.com
-node1.openshift.com
-node1.openshift.com
+test01.es3.cz 
+test02.es3.cz
+test03.es3.cz
+
+[etcd]
+test01.es3.cz 
+test02.es3.cz 
+test03.es3.cz 
 
 [monitoring]
-monitoring.openshift.com
+test04.es3.cz ansible_local.system.is_atomic=false 
 
 [dns]
-#setup dnsmasq
-monitoring.openshift.com
+test04.es3.cz 
 
 [nfs]
 #setup nfs server
-master1.openshift.com
+#master1.openshift.com
 
 [all:vars]
+openshift_master_cluster_hostname="test01.es3.cz"
 #Vip ip used into dnsmasq to match to the openshift api fqdn (only needed if you use dns role)
-customer_api_public_vip="1.2.3.4"
+customer_api_public_vip="192.168.121.200"
 
-monitoring_vip="1.2.3.4"
+monitoring_vip="192.168.121.201"
 rabbitmq_sensu_password="password"
 customer="openshift_test"
-customer_domain="enoshift.com"
+customer_domain="es3.cz"
 # if you want to be able to reach sensu with other domain names than the default mon.{{ customer_domain }} :
-customer_sensu_httpd_aliases=['monitor.enoshift.com', 'sensu.myclient-cloud.com']
+customer_sensu_httpd_aliases=['monitor.es3.cz', 'sensu.es3.cz']
 
 sensu_flowdock_auth_token="mytoken"
-sensu_mail_to="mail1@domain.com, mail2@domain"
+sensu_mail_to="david.strejc@gmail.com"
 #wildcard to generate router certificat
 openshift_wildcard_dns="*.{{ customer_domain }}"
 
@@ -54,16 +59,16 @@ customer_collectd_disk_rootfs=xvda2
 # customer_openshift_registry_mount_host='/mnt/ose-registry'
 # customer_collectd_disk_ose_registry=xvdg
 
-customer_http_proxy=http://openshiftproxy.com:8080
-customer_https_proxy=http://openshiftproxy.com:8080
-customer_append_no_proxy=",.intranet.customer"
+#customer_http_proxy=http://openshiftproxy.com:8080
+#customer_https_proxy=http://openshiftproxy.com:8080
+#customer_append_no_proxy=",.intranet.customer"
 # or if you want to overwrite default no_proxy instead:
 # customer_no_proxy="localhost,.svc.cluster.local,.intranet.customer"
 # manage docker storage true/false
-manage_docker_storage=true
+manage_docker_storage=false
 
 # for monitoring check using api rest
-#openshift_base_api='/api/v1/'
+openshift_base_api='/api/v1/'
 
 # Subscriptions. If you want to automatically register all your nodes.
 # subscription_name='username'
@@ -73,7 +78,10 @@ manage_docker_storage=true
 # customer_sensu_httpd_port='443'
 # customer_sensu_httpd_ssl='true'
 # customer_grafana_httpd_port='443'
-# customer_grafana_httpd_ssl='true'
+customer_grafana_httpd_ssl='false'
+grafana_httpd_ssl='false'
+kibana_httpd_ssl='false'
+sensu_httpd_ssl='false'
 # customer_kibana_httpd_port='443'
 # customer_kibana_httpd_ssl='true'
 # if you don't want to use the default volume group docker-vg for docker:
@@ -91,7 +99,7 @@ manage_docker_storage=true
 # playbook will then not install mysql and create user/db on monitoring host.
 
 ntp_servers=["ntp1.customer", "ntp2.customer"]
-dns_servers=["10.0.0.1", "10.0.0.2"]
+#dns_servers=["10.0.0.1", "10.0.0.2"]
 postfix_relayhost="smtp.mycustomer.intranet"
 postfix_myorigin="smtp.mycustomer.com"
-timezone="Europe/Paris"
+timezone="Europe/Prague"

@@ -1,7 +1,6 @@
 ---
 - include: facts.yml
 - include: mail.yml
-  when: not ansible_local.system.is_atomic | bool
   tags: mail
 
 - include: logrotate.yml
@@ -9,7 +8,6 @@
   tags: service_ips
 
 - include: gem.yml
-  when: not ansible_local.system.is_atomic | bool
 
 - include: bashrc.yml
 - include: ntp.yml
@@ -19,7 +17,7 @@
   tags:
     - sensu-client
     - monitoring-client
-  when: "'monitoring' in groups and not ansible_local.system.is_atomic | bool"
+  when: "'monitoring' in groups"
 
 - include: sensu_config.yml
   tags:
@@ -35,7 +33,7 @@
   tags:
     - collectd
     - graph-client
-  when: "'monitoring' in groups and not ansible_local.system.is_atomic | bool"
+  when: "'monitoring'"
 
 - include: collectd_config.yml
   tags:
